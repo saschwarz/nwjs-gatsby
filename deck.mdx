@@ -1,0 +1,269 @@
+import { FullScreenCode, Head, Image } from 'mdx-deck'
+import {BGImage} from './src/index'
+import Theme from './src/index'
+export const theme = Theme
+
+<Head>
+<title>Moving the AgilityNerd Blog to GatsbyJS</title>
+</Head>
+
+---
+
+# Moving the AgilityNerd Blog to GatsbyJS
+
+## Steve Schwarz
+
+### NWCJS Meetup 2019-11-21
+
+---
+
+## Steve Schwarz
+
+#### @steveaschwarz                						       http://tech.agilitynerd.com
+
+- Professional software developer since 1991.
+- 15 years C/C++ OO client-server development in factory automation and futures/options trading.
+- 12+ years web development in a B2B SaaS from startup through acquisition. Python, JavaScript, AngularJS, and Postgres. From “monolith” to microservices.
+- 20+ years dog agility trainer/competitor and web developer: agilitynerd.com,  agilitycourses.com, & agilitycoursemaster.com
+
+---
+import agilitynerd from './images/agilitynerd.png'
+
+<Image src={agilitynerd}>
+
+# foo
+
+</Image>
+
+---
+
+## AgilityNerd
+#### https://agilitynerd.com
+
+
+- Oldest dog agility blog
+- Designed to be a reference site with pages dynamically cross linked
+- 800 blog posts
+- 1600 total pages
+- 12,000 FB followers
+
+---
+
+## Why Change?
+
+- Platform complicated/locked-in => cost
+- Terrible authoring experience
+- Poor performance
+- FTP deploy
+
+---
+
+## Existing Technology
+
+- Content in flat files
+- frontmatter/HTML fragment files
+- Nested directories
+- Perl CGI Script (Blosxom) / plugins
+- FastCGI
+- NGINX caching
+- FTP Upload
+- No preview
+- HTML authoring
+
+---
+
+## Decided on a JAMstack Solution
+
+- JavaScript
+- APIs
+- Markup
+
+Provides:
+
+- Performance: Generate all/most pages at build time
+- Scaling: Stateless servers and CDNs
+- Security: No server code running smaller attack surface
+- Developer Experience
+
+https://jamstack.org
+
+---
+
+## Gatsby JS
+
+Open source https://gatsbyjs.org supported by commercial offerings https://gatsbyjs.com
+
+Fits the JAMStack model:
+- Static site generator
+- Combine data sources
+- Generate all pages
+- Unified data access model: GraphQL Todd Mantel video here
+- Git or hook based deploys
+- Real time preview
+
+---
+
+## Use Gatsby For:
+
+- Portfolio, brouchure, blogs
+- Excels at content obtained at build time
+- Shopping site: client side JS to communicate with APIs
+- Write Few/Read Many? Just regenerate and deploy
+
+---
+
+Generates
+
+---
+
+## Setting Up
+
+- install node
+- install git
+```
+mkdir my-project && cd my-project
+
+npm install -g gatsby-cli
+
+gatsby develop
+```
+
+---
+
+## Starters
+blog starter
+
+- pages
+- markdown
+
+---
+
+## Set up data sources
+
+`gatsby-config.js`
+
+- Markdown/images from file system
+- CMS API(s) to fetch content
+- Favorites from google analytics
+- YAML, CSV, JSON files
+
+---
+
+## Using Data Sources
+
+- Gatsby data sources create GraphQL nodes
+- Query the data via GraphQL
+- Interactive testing via GraphiQL explorer
+- Generate pages using Gatsby API
+
+---
+
+## `gatsby-node.js`
+
+```
+exports.createPages = async ({ graphql, actions }) => {
+  const result = await graphql(
+    `{
+      allMdx(sort: {fields: [frontmatter___date], order: DESC},
+      filter: {frontmatter: {date: {ne: null}, draft: {ne: true}}}) {
+        edges {
+          node {
+            id
+            fields {
+              slug
+            }
+            frontmatter {
+              title
+              date
+              tags
+            }
+          }
+        }
+      }
+      tagsGroup: allMdx(
+        filter: {frontmatter: {date: {ne: null}, draft: {ne: true}}}) {
+        group(field: frontmatter___tags) {
+          fieldValue
+        }
+      }
+    }`
+  )
+```
+
+---
+
+<FullScreenCode>
+
+```
+// Create individual blog posts pages.
+posts.forEach((post, index) => {
+  const previous = index === posts.length - 1 ? null : posts[index + 1].node
+  const next = index === 0 ? null : posts[index - 1].node
+  const slug = post.node.fields.slug
+  createPage({
+    path: slug,
+    component: slug.includes('/static/') ? staticPost : blogPost,
+    context: {
+      slug: slug,
+      previous,
+      next,
+    },
+  })
+})
+```
+
+</FullScreenCode>
+
+---
+
+Templates
+blogpost
+
+---
+
+ReactJS Components
+
+```
+<TagCloud>
+```
+
+---
+
+MDX + React Components
+
+
+---
+
+## Plugins
+
+- MDX
+- Analytics
+- Sitemap
+- Search
+- Offline
+- Manifest
+- RSS Feeds
+- Image Processing
+- SASS
+
+---
+
+## Deploy to Netlify
+
+---
+
+## Gatsby Themes
+
+---
+
+## Gatsby Future
+
+- Gatsby Cloud
+
+- Large site performance
+
+---
+
+# Thanks!
+
+---
