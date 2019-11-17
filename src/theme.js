@@ -41,6 +41,9 @@ export default {
     },
     a: {
       color: 'link',
+    },
+    hr: {
+      display: 'none',
     }
   },
   colors: {
