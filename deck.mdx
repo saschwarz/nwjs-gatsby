@@ -1,6 +1,6 @@
-import { FullScreenCode, Head, Image } from 'mdx-deck'
-import {BGImage} from './src/index'
+import { FullScreenCode, Head, Image, SplitRight, Box } from 'mdx-deck'
 import Theme from './src/index'
+import { Card, SplitLeftAlign } from './src/index'
 export const theme = Theme
 
 <Head>
@@ -13,39 +13,48 @@ export const theme = Theme
 
 ## Steve Schwarz
 
-### NWCJS Meetup 2019-11-21
+### NWCJS Meetup - 2019-11-21
 
 ---
 
-## Steve Schwarz
+<SplitRight>
 
-#### @steveaschwarz                						       http://tech.agilitynerd.com
 
-- Professional software developer since 1991.
-- 15 years C/C++ OO client-server development in factory automation and futures/options trading.
-- 12+ years web development in a B2B SaaS from startup through acquisition. Python, JavaScript, AngularJS, and Postgres. From “monolith” to microservices.
-- 20+ years dog agility trainer/competitor and web developer: agilitynerd.com,  agilitycourses.com, & agilitycoursemaster.com
+![](./images/steve-snap.jpg)
+
+
+#### @steveaschwarz
+
+Professional software developer since 1991.
+
+15 yr C/C++ OO client-server dev: factory automation and futures/options trading.
+
+12+ yr web dev: Python, JavaScript, Angular, VueJS, and Postgres
+
+20+ yr hobby: dog agility and web dev: agilitynerd.com,  tech.agilitynerd.com, googility.com, agilitycourses.com & agilitycoursemaster.com
+
+</SplitRight>
 
 ---
-import agilitynerd from './images/agilitynerd.png'
+import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
-<Image src={agilitynerd}>
+<SplitLeftAlign>
 
-# foo
+  <div style="text-align: left;">
+    <h2>AgilityNerd Blog</h2>
+    <ul>
+      <li>Oldest dog agility blog</li>
+      <li>Designed to be a reference site with pages dynamically cross linked</li>
+      <li>800 blog posts</li>
+      <li>1600 total pages</li>
+      <li>12,000 FB followers</li>
+    </ul>
+  </div>
 
-</Image>
+  <Image src={legacyagilitynerd} size="contain" style={{height: '100vh'}}>
+  </Image>
 
----
-
-## AgilityNerd
-#### https://agilitynerd.com
-
-
-- Oldest dog agility blog
-- Designed to be a reference site with pages dynamically cross linked
-- 800 blog posts
-- 1600 total pages
-- 12,000 FB followers
+</SplitLeftAlign>
 
 ---
 
@@ -60,15 +69,20 @@ import agilitynerd from './images/agilitynerd.png'
 
 ## Existing Technology
 
-- Content in flat files
+<SplitLeftAlign>
+
+- Content in directories of flat files
 - frontmatter/HTML fragment files
-- Nested directories
 - Perl CGI Script (Blosxom) / plugins
 - FastCGI
+
+
 - NGINX caching
 - FTP Upload
 - No preview
 - HTML authoring
+
+</SplitLeftAlign>
 
 ---
 

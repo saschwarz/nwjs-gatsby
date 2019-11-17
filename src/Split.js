@@ -1,43 +1,9 @@
-import {Box} from 'mdx-deck'
-import {Flex} from 'mdx-deck'
-import React from 'react'
+import {Split} from 'mdx-deck'
 import styled from 'styled-components'
 
-const Root = styled.div([], {
-  width: '100vw',
-  height: '100vh'
-})
-
-const Half = styled(Box)`
-  position: relative;
-  > * {
-    max-width: 100%;
-    transform: none !important;
-    left: 0 !important;
-    top: 0 !important;
-  }
+const SplitLeftAlign = styled(Split)`
+  text-align: left !important;
+  align-items: start !important
 `
 
-const Wrapper = styled(Flex)`
-  align-items: center;
-  height: 100%;
-`
-
-const Split = ({ children }) => {
-  const kids = React.Children.toArray(children.props.children)
-  const numberOfChildren = kids.length
-
-  return (
-    <Root>
-      <Wrapper>
-        {kids.map(k => (
-          <Half key={k.key} width={1 / numberOfChildren}>
-            {k}
-          </Half>
-        ))}
-      </Wrapper>
-    </Root>
-  )
-}
-
-export default Split
+export default SplitLeftAlign
