@@ -29,6 +29,8 @@ import stevesnap from './images/steve-snap.jpg'
 
 #### @steveaschwarz
 
+<div style="text-align: left">
+
 Professional software developer since 1991.
 
 15 yr C/C++ client-server dev: factory automation and futures/options trading.
@@ -39,26 +41,31 @@ Professional software developer since 1991.
 
 </div>
 
+</div>
+
 </SplitRight>
 
 ---
+
 import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
-<SplitLeftAlign>
+<SplitLeftAlign style="width:100%">
 
-  <div style="text-align: left;padding-right:1em;">
-    <h3>AgilityNerd Blog</h3>
-    <ul>
-      <li>Started in 2004</li>
-      <li>Oldest dog agility blog</li>
-      <li>Categories, tags, pages automatically cross linked</li>
-      <li>800 blog posts</li>
-      <li>1600 total pages</li>
-      <li>12,000 FB followers</li>
-    </ul>
-  </div>
+<div style="height:100vh">
+<Image src={legacyagilitynerd} size="contain"></Image>
+</div>
 
-  <Image src={legacyagilitynerd} size="contain"/>
+<div style="text-align: left;padding-left:1em;">
+<h3>AgilityNerd Blog</h3>
+<ul>
+<li>Started in 2004</li>
+<li>Oldest dog agility blog</li>
+<li>Hierarchical categories, tags, pages automatically cross linked</li>
+<li>800 blog posts</li>
+<li>1600 total pages</li>
+<li>12,000 FB followers</li>
+</ul>
+</div>
 
 </SplitLeftAlign>
 
@@ -133,7 +140,7 @@ Supported by commercial offerings https://gatsbyjs.com
 
 - Portfolio, brouchure, blogs
 - Excels at content obtained at build time
-- Shopping site: client side JS to communicate with APIs
+- Hybrid sites: include client side JS to communicate with APIs
 - New data? Regenerate and re-deploy
 
 ---
@@ -141,6 +148,11 @@ Supported by commercial offerings https://gatsbyjs.com
 # Gatsby in Action
 
 [agilitynerd.com](https://www.agilitynerd.com)
+
+- Lighthouse performance score
+- Image blur up
+- Prefetch links on scroll
+- Progressive Web App
 
 ---
 
@@ -150,35 +162,29 @@ import howgatsbyworks from './images/how-gatsby-works.png'
 
 ---
 
-## Setting Up
+## Getting Started
 
-- install node and git
 ```
-mkdir my-project && cd my-project
-
 npm install -g gatsby-cli
+
+gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
+
+cd my-blog-starter
 
 gatsby develop
 ```
 
----
-
-## Starters
-blog starter
-
-- pages
-- markdown
+https://github.com/gatsbyjs/gatsby-starter-blog
 
 ---
 
-## Set up data sources
+## Data Source Plugins Provide Content
 
-`gatsby-config.js`
-
-- Markdown/images from file system
-- CMS API(s) to fetch content
-- Favorites from google analytics
-- YAML, CSV, JSON files
+- Markdown, YAML, CSV, JSON, etc. from files
+- Images
+- Content Management Systems
+- Twitter, FB, GitHub feeds
+- Configured in `gatsby-config.js`
 
 ---
 
@@ -187,13 +193,15 @@ blog starter
 - Gatsby data sources create GraphQL nodes
 - Query the data via GraphQL
 - Interactive testing via GraphiQL explorer:
-
-
-
-- Generate pages using Gatsby API in `gatsby-node.js`
 - Over 400 data source plugins:
 
 https://www.gatsbyjs.org/plugins/?=source
+
+---
+
+## Generate pages using Gatsby API
+
+- Use GraphQL to query the source plugins' nodes
 
 ---
 
@@ -238,6 +246,13 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ---
 
+##  Create Pages
+
+- Call Gatsby's `createPage()` with GraphQL results
+- Make Gatsby API calls in `gatsby-node.js`
+
+---
+
 <FullScreenCode>
 
 ```
@@ -249,8 +264,8 @@ posts.forEach((post, index) => {
   const slug = post.node.fields.slug
   createPage({
     path: slug,
-    component: slug.includes('/static/') ? staticPost : blogPost,
-    context: {
+    component: slug.includes('/static/') ? staticPost : blogPost, // template component
+    context: {  // component props
       slug: slug,
       previous,
       next,
@@ -265,38 +280,61 @@ posts.forEach((post, index) => {
 
 ## Templates
 
+- React components
+- Can contain additional GraphQL queries
+
 `src/templates/static-post.js`
 
 ---
 
-ReactJS Components
+## Create/Use React Components Everywhere
 
-```
-<TagCloud>
-```
+Create your own:
+  ```
+  <TagCloud>
+  <TagList>
+  <Breadcrumbs>
+  <Categories>
+  ```
 
----
-
-MDX + React Components
-
-
----
-
-## Plugins
-
-- MDX
-- Analytics
-- Sitemap
-- Search
-- Offline
-- Manifest
-- RSS Feeds
-- Image Processing
-- SASS
+Use 3rd Party Components
 
 ---
 
-## Deploy to Netlify
+## Plugins Can Do More
+
+<SplitLeftAlign>
+
+<div>
+
+- Client-side:
+  - Analytics
+  - Search
+  - Offline mode
+
+</div>
+
+<div>
+
+- During generation:
+  - Manifest
+  - RSS Feeds
+  - Image Processing
+  - SASS
+  - Sitemap
+
+</div>
+
+</SplitLeftAlign>
+
+---
+
+## Deploy
+
+- Gatsby sites only need static hosting!
+- GitHub pages, AWS, Azure, Zeit, Netlify, Cloudflare, Google Cloud, etc.
+- Trigger build via Git commit hook
+- Auto deploy
 
 ---
 
@@ -312,6 +350,28 @@ MDX + React Components
 
 ---
 
-# Thanks!
+## Wait, There's More Gatsby!
+
+<div style="text-align: left">
+
+1. Slide Deck Built with [mdx-deck](https://github.com/jxnblk/mdx-deck)
+
+Built on Gatsby
+
+2. Source on GitHub:
+
+https://github.com/saschwarz/nwjs-gatsby
+
+3. Commit/Push Builds/Deploys to [Netlify](https://netlify.com)
+
+https://nwcjs-gatsby.netlify.com
+
+</div>
+
+---
+import snapgatsby from './images/snap-gatsby.jpg'
+
+<Image src={snapgatsby} size="contain" style={{height: '80vh'}}>
+</Image>
 
 ---
