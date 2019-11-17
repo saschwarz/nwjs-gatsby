@@ -5,12 +5,22 @@ export default {
   ...dark,
   Provider,
   styles: {
+    h1: {
+      fontSize: '1.7em',
+    },
+    h2: {
+      fontSize: '1.5em',
+    },
+    h3: {
+      fontSize: '1.3em',
+    },
     h4: {
+      fontSize: '1.1em',
       marginBlockStart: '1em',
     },
     p: {
       fontFamily: '"Raleway", arial',
-      fontSize: '1em',
+      fontSize: '0.8em',
     },
     monospace: '"Dank Mono", monospace',
     img: {
@@ -20,12 +30,12 @@ export default {
     li: {
       paddingBottom: '20px',
       fontFamily: '"Raleway", arial',
-      fontSize: '1em',
-      lineHeight: '2em',
+      fontSize: '0.9em',
+      lineHeight: '1.5em',
     },
-    ul: {
-      display: 'inline-block'
-    },
+    pre: {
+      fontSize: '30px',
+    }
   },
   colors: {
     text: '#d9bae8',

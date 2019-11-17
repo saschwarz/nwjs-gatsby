@@ -16,11 +16,11 @@ export const theme = Theme
 ### NWCJS Meetup - 2019-11-21
 
 ---
+import stevesnap from './images/steve-snap.jpg'
 
 <SplitRight>
 
-
-![](./images/steve-snap.jpg)
+<Image src={stevesnap} size="contain" style={{height: '100vh'}}/>
 
 
 #### @steveaschwarz
@@ -40,18 +40,18 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
 <SplitLeftAlign>
 
-  <div style="text-align: left;">
-    <h2>AgilityNerd Blog</h2>
+  <div style="text-align: left;padding-right:1em;">
+    <h3>AgilityNerd Blog</h3>
     <ul>
       <li>Oldest dog agility blog</li>
-      <li>Designed to be a reference site with pages dynamically cross linked</li>
+      <li>Categories, tags, pages automatically cross linked</li>
       <li>800 blog posts</li>
       <li>1600 total pages</li>
       <li>12,000 FB followers</li>
     </ul>
   </div>
 
-  <Image src={legacyagilitynerd} size="contain" style={{height: '100vh'}}>
+  <Image src={legacyagilitynerd} size="contain">
   </Image>
 
 </SplitLeftAlign>
@@ -60,8 +60,10 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
 ## Why Change?
 
-- Platform complicated/locked-in => cost
-- Terrible authoring experience
+- Installation complicated/VPS/$$s
+- Terrible authoring experience:
+  - Raw HTML
+  - No Preview
 - Poor performance
 - FTP deploy
 
@@ -69,20 +71,11 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
 ## Existing Technology
 
-<SplitLeftAlign>
-
 - Content in directories of flat files
-- frontmatter/HTML fragment files
 - Perl CGI Script (Blosxom) / plugins
 - FastCGI
-
-
 - NGINX caching
-- FTP Upload
-- No preview
-- HTML authoring
-
-</SplitLeftAlign>
+- Linux VPS
 
 ---
 
@@ -126,14 +119,15 @@ Fits the JAMStack model:
 
 ---
 
-Generates
+import howgatsbyworks from './images/how-gatsby-works.png'
+
+<Image src={howgatsbyworks} size="contain" style={{height: '100vh'}}/>
 
 ---
 
 ## Setting Up
 
-- install node
-- install git
+- install node and git
 ```
 mkdir my-project && cd my-project
 
@@ -167,14 +161,20 @@ blog starter
 
 - Gatsby data sources create GraphQL nodes
 - Query the data via GraphQL
-- Interactive testing via GraphiQL explorer
-- Generate pages using Gatsby API
+- Interactive testing via GraphiQL explorer:
+
+
+
+- Generate pages using Gatsby API in `gatsby-node.js`
+- Over 400 data source plugins:
+
+https://www.gatsbyjs.org/plugins/?=source
 
 ---
 
-## `gatsby-node.js`
+<FullScreenCode>
 
-```
+```js
 exports.createPages = async ({ graphql, actions }) => {
   const result = await graphql(
     `{
@@ -203,6 +203,13 @@ exports.createPages = async ({ graphql, actions }) => {
     }`
   )
 ```
+</FullScreenCode>
+
+---
+
+## Test/Fine Tune GQL Queries
+
+[GraphiQL](http://localhost:8000/___graphql?query=query%20MyQuery%20%7B%0A%20%20allMdx(sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20DESC%7D%2C%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20tagsGroup%3A%20allMdx(filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___tags)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=MyQuery)
 
 ---
 
@@ -210,6 +217,7 @@ exports.createPages = async ({ graphql, actions }) => {
 
 ```
 // Create individual blog posts pages.
+
 posts.forEach((post, index) => {
   const previous = index === posts.length - 1 ? null : posts[index + 1].node
   const next = index === 0 ? null : posts[index - 1].node
@@ -230,8 +238,9 @@ posts.forEach((post, index) => {
 
 ---
 
-Templates
-blogpost
+## Templates
+
+`src/templates/static-post.js`
 
 ---
 
