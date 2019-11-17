@@ -20,12 +20,15 @@ export default {
     },
     p: {
       fontFamily: '"Raleway", arial',
-      fontSize: '0.8em',
+      fontSize: '0.9em',
     },
     monospace: '"Dank Mono", monospace',
     img: {
       maxHeight: '80vh',
       maxWidth: '100%'
+    },
+    ul: {
+      paddingTop: '20px',
     },
     li: {
       paddingBottom: '20px',
