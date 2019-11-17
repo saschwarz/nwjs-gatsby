@@ -35,11 +35,14 @@ export default {
     },
     pre: {
       fontSize: '30px',
+    },
+    a: {
+      color: 'link',
     }
   },
   colors: {
     text: '#d9bae8',
     background: 'rgb(1, 22, 39)',
-    link: '#d9bae8'
+    link: '#8A4BAF'
   }
 }

@@ -1,10 +1,10 @@
-import { FullScreenCode, Head, Image, SplitRight, Box } from 'mdx-deck'
+import { FullScreenCode, Head, Image, SplitRight } from 'mdx-deck'
 import Theme from './src/index'
 import { Card, SplitLeftAlign } from './src/index'
 export const theme = Theme
 
 <Head>
-<title>Moving the AgilityNerd Blog to GatsbyJS</title>
+  <title>Moving the AgilityNerd Blog to GatsbyJS</title>
 </Head>
 
 ---
@@ -13,25 +13,31 @@ export const theme = Theme
 
 ## Steve Schwarz
 
-### NWCJS Meetup - 2019-11-21
+#### NWCJS Meetup - Nov-2019
 
 ---
 import stevesnap from './images/steve-snap.jpg'
 
 <SplitRight>
 
-<Image src={stevesnap} size="contain" style={{height: '100vh'}}/>
+<div style="position:relative">
+<Image src={stevesnap} size="contain" style={{height: '90vh', marginLeft: '1em'}} title="Copyright Chops Photography"/>
+<a style="position:absolute;bottom:5em;left:0;width:100%;font-size:0.5em" href="https://chopsphoto.com">Photo Copyright Chops Photography</a>
+</div>
 
+<div style="padding: 0 1em">
 
 #### @steveaschwarz
 
 Professional software developer since 1991.
 
-15 yr C/C++ OO client-server dev: factory automation and futures/options trading.
+15 yr C/C++ client-server dev: factory automation and futures/options trading.
 
 12+ yr web dev: Python, JavaScript, Angular, VueJS, and Postgres
 
 20+ yr hobby: dog agility and web dev: agilitynerd.com,  tech.agilitynerd.com, googility.com, agilitycourses.com & agilitycoursemaster.com
+
+</div>
 
 </SplitRight>
 
@@ -43,6 +49,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
   <div style="text-align: left;padding-right:1em;">
     <h3>AgilityNerd Blog</h3>
     <ul>
+      <li>Started in 2004</li>
       <li>Oldest dog agility blog</li>
       <li>Categories, tags, pages automatically cross linked</li>
       <li>800 blog posts</li>
@@ -51,8 +58,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
     </ul>
   </div>
 
-  <Image src={legacyagilitynerd} size="contain">
-  </Image>
+  <Image src={legacyagilitynerd} size="contain"/>
 
 </SplitLeftAlign>
 
@@ -60,18 +66,19 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
 ## Why Change?
 
-- Installation complicated/VPS/$$s
+- 1990s technology - extending difficult
+- Complex installation - stuck on expensive VPS
 - Terrible authoring experience:
   - Raw HTML
   - No Preview
+  - FTP deploy
 - Poor performance
-- FTP deploy
 
 ---
 
 ## Existing Technology
 
-- Content in directories of flat files
+- **Content in directories of flat files**
 - Perl CGI Script (Blosxom) / plugins
 - FastCGI
 - NGINX caching
@@ -85,12 +92,20 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 - APIs
 - Markup
 
-Provides:
+---
+
+import jamstack from './images/jamstack.png'
+
+<Image src={jamstack} size="contain" style={{height: '100vh'}}/>
+
+---
+
+## JAMstack Provides:
 
 - Performance: Generate all/most pages at build time
 - Scaling: Stateless servers and CDNs
 - Security: No server code running smaller attack surface
-- Developer Experience
+- Improved Developer Experience
 
 https://jamstack.org
 
@@ -98,15 +113,19 @@ https://jamstack.org
 
 ## Gatsby JS
 
-Open source https://gatsbyjs.org supported by commercial offerings https://gatsbyjs.com
+Open source https://gatsbyjs.org
 
-Fits the JAMStack model:
-- Static site generator
-- Combine data sources
-- Generate all pages
-- Unified data access model: GraphQL Todd Mantel video here
+Supported by commercial offerings https://gatsbyjs.com
+
+---
+
+## Fits the JAMStack model:
+- Combines multiple data sources
+- Unified data access model: GraphQL
+- Generate all pages at build time
+- React client hydrates pages/prefetches links: **Fast**
 - Git or hook based deploys
-- Real time preview
+- Real time preview/hot reload
 
 ---
 
@@ -115,7 +134,13 @@ Fits the JAMStack model:
 - Portfolio, brouchure, blogs
 - Excels at content obtained at build time
 - Shopping site: client side JS to communicate with APIs
-- Write Few/Read Many? Just regenerate and deploy
+- New data? Regenerate and re-deploy
+
+---
+
+# Gatsby in Action
+
+[agilitynerd.com](https://www.agilitynerd.com)
 
 ---
 
