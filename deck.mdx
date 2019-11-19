@@ -25,19 +25,19 @@ import stevesnap from './images/steve-snap.jpg'
 <a style="position:absolute;bottom:5em;left:0;width:100%;font-size:0.5em" href="https://chopsphoto.com">Photo Copyright Chops Photography</a>
 </div>
 
-<div style="padding: 0 1em">
+<div style="padding: 0 1em 1em 1em">
 
 #### @steveaschwarz
 
 <div style="text-align: left">
 
-Professional software developer since 1991.
+Software developer since 1991.
 
-15 yr C/C++ client-server dev: factory automation and futures/options trading.
+15 yrs C/C++: factory automation and futures/options trading.
 
-12+ yr web dev: Python, JavaScript, Angular, VueJS
+12+ yrs web dev: Python, JavaScript, Angular, VueJS
 
-20+ yr hobby: dog agility and web dev: [agilitynerd.com](https://www.agilitynerd.com),  [tech.agilitynerd.com](https://tech.agilitynerd.com), [googility.com](https://googility.com), [agilitycourses.com](https://agilitycourses.com) & [agilitycoursemaster.com](https://agilitycoursemaster.com)
+20+ yrs: dog agility and web dev: [agilitynerd.com](https://www.agilitynerd.com),  [tech.agilitynerd.com](https://tech.agilitynerd.com), [googility.com](https://googility.com), [agilitycourses.com](https://agilitycourses.com) & [agilitycoursemaster.com](https://agilitycoursemaster.com)
 
 </div>
 
@@ -88,7 +88,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
     - Local editor
     - Flat files: metadata + HTML
     - No local preview
-    - Manually process images
+    - Manually optimize images
     - FTP deploy of HTML/assets, view on site and tweak
 
 </div>
@@ -96,7 +96,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
   - Desired:
     - Local and mobile editing
-    - Flat files or CMS in Markdown
+    - Flat files or CMS in [MDX](https://mdxjs.com/)
     - Local and mobile preview
     - Upload raw images
     - Commit to `git` deploys site
@@ -116,7 +116,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
     - Dozens of custom plugins
     - Scripts to generate tags, etc.
     - NGINX with caching
-    - Linux VPS $$
+    - Linux VPS $
 
 </div>
 <div>
@@ -145,7 +145,8 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
   - Desired:
     - All pages fast
-    - Prefetch pages/images
+    - Prefetch pages
+    - Responsive images
     - Offline support
 
 </div>
@@ -184,7 +185,7 @@ https://jamstack.org
 
 ## Gatsby "Fits the bill"
 
-<SplitLeftAlign style="width:90%">
+<SplitLeftAlign style="width:99%">
 <div>
 
   - Authoring
@@ -192,6 +193,7 @@ https://jamstack.org
     - Markdown + React => MDX
     - Local preview/hot reload
     - Uploaded images optimized
+    - Dynamic data updated during build
     - Commit to `git` deploys site
 
 </div>
@@ -247,6 +249,12 @@ gatsby develop
 ```
 
 https://github.com/gatsbyjs/gatsby-starter-blog
+
+---
+
+## What Happens When Gatsby Builds?
+
+[Great explanation on the Gatsby site](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/#what-happens-when-you-run-gatsby-build)
 
 ---
 
@@ -435,21 +443,13 @@ Gatsby + MDX => components in your Markdown
 
 ## Wait, There's More Gatsby!
 
-<div style="text-align: left">
 
-1. Slide Deck Built with [mdx-deck](https://github.com/jxnblk/mdx-deck)
-
-Built on Gatsby
-
-2. Source on GitHub:
-
-https://github.com/saschwarz/nwjs-gatsby
-
-3. Commit/Push Builds/Deploys to [Netlify](https://netlify.com)
+- _This_ slide deck built with Gatsby-based [mdx-deck](https://github.com/jxnblk/mdx-deck) !
+- Source on GitHub:   https://github.com/saschwarz/nwjs-gatsby
+- Commit/Push Builds/Deploys to [Netlify](https://netlify.com):
 
 https://nwcjs-gatsby.netlify.com
 
-</div>
 
 ---
 import snapgatsby from './images/snap-gatsby.jpg'
