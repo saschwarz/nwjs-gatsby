@@ -62,7 +62,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 <li>Oldest dog agility blog</li>
 <li>Hierarchical categories, tags, pages automatically cross linked</li>
 <li>800 blog posts</li>
-<li>1600 total pages</li>
+<li>1,600 total pages</li>
 <li>12,000 FB followers</li>
 </ul>
 </div>
@@ -73,34 +73,97 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 
 ## Why Change?
 
-- 1990s technology - extending difficult
-- Complex installation - stuck on expensive VPS
-- Terrible authoring experience:
-  - Raw HTML
-  - No Preview
-  - FTP deploy
-- Poor performance
+1. Authoring experience so painful I don't want to blog!
+2. Extinct 1990s platform requiring a VPS: *simplify*
+3. Performance
 
 ---
 
-## Existing Technology
+## Authoring
 
-- **Content in directories of flat files**
-- Perl CGI Script (Blosxom) / plugins
-- FastCGI
-- NGINX caching
-- Linux VPS
+<SplitLeftAlign style="width:90%">
+<div>
+
+  - Current:
+    - Local editor
+    - Flat files: metadata + HTML
+    - No local preview
+    - Manually process images
+    - FTP deploy of HTML/assets, view on site and tweak
+
+</div>
+<div>
+
+  - Desired:
+    - Local and mobile editing
+    - Flat files or CMS in Markdown
+    - Local and mobile preview
+    - Upload raw images
+    - Commit to `git` deploys site
+
+</div>
+</SplitLeftAlign>
 
 ---
 
-## Decided on a JAMstack Solution
+## Platform
 
-- JavaScript
-- APIs
-- Markup
+<SplitLeftAlign style="width:90%">
+<div>
+
+  - Current:
+    - 1990s Perl CGI Script (Blosxom)
+    - Dozens of custom plugins
+    - Scripts to generate tags, etc.
+    - NGINX with caching
+    - Linux VPS $$
+
+</div>
+<div>
+
+  - Desired:
+    - Use the latest technology
+    - Static hosting
+    - Zero or low cost
+
+</div>
+</SplitLeftAlign>
 
 ---
 
+## Performance
+
+<SplitLeftAlign style="width:90%">
+<div>
+
+  - Current:
+    - Caching gives fast page load on "hot" pages
+    - Images on subdomain for parallelization
+
+</div>
+<div>
+
+  - Desired:
+    - All pages fast
+    - Prefetch pages/images
+    - Offline support
+
+</div>
+</SplitLeftAlign>
+
+---
+import gatsbyicon from './images/Gatsby_Monogram.png'
+
+<Image src={gatsbyicon} size='contain' style={{height:150}}/>
+
+##  Gatsby JS
+
+- Open source, MIT license: https://gatsbyjs.org
+- Created by Kyle Mathews [@kylemathews](https://twitter.com/kylemathews)
+- Commercial services: https://gatsbyjs.com
+
+---
+<!--
 import jamstack from './images/jamstack.png'
 
 <Image src={jamstack} size="contain" style={{height: '100vh', zIndex: 10}}/>
@@ -112,41 +175,38 @@ import jamstack from './images/jamstack.png'
 - Performance: Generate all/most pages at build time
 - Scaling: Stateless servers and CDNs
 - Security: No server code running smaller attack surface
-- Improved Developer Experience
+- Improved developer experience
 
 https://jamstack.org
 
 ---
-import gatsbyicon from './images/Gatsby_Monogram.png'
+-->
 
-<Image src={gatsbyicon} size='contain' style="display:block;height:150px"/>
+## Gatsby "Fits the bill"
 
-## Gatsby JS
+<SplitLeftAlign style="width:90%">
+<div>
 
-- Open source: https://gatsbyjs.org
-- Created by Kyle Mathews [@kylemathews](https://twitter.com/kylemathews)
-- MIT license
-- Great documentation!
-- Supported by services: https://gatsbyjs.com
+  - Authoring
+    - Flat files or CMS in Markdown
+    - Markdown + React => MDX
+    - Local preview/hot reload
+    - Uploaded images optimized
+    - Commit to `git` deploys site
 
----
+</div>
+<div>
 
-## Gatsby and the JAMStack model:
-- Combines multiple data sources
-- Unified data access model: GraphQL
-- Generate all pages at build time
-- React client hydrates pages/prefetches links: **Fast**
-- Git or hook based deploys
-- Real time preview/hot reload
+  - Platform
+    - Latest tech: JS, ReactJS, GraphQL
+    - Static hosting - anywhere and free
+  - Performance!
+    - All pages fast
+    - Prefetch pages/images
+    - Offline support
 
----
-
-## Use Gatsby For:
-
-- Portfolio, brouchure, blogs
-- Excels at content obtained at build time
-- Hybrid sites: include client side JS to communicate with APIs
-- New data? Regenerate and re-deploy
+</div>
+</SplitLeftAlign>
 
 ---
 
@@ -154,13 +214,20 @@ import gatsbyicon from './images/Gatsby_Monogram.png'
 
 [agilitynerd.com](https://www.agilitynerd.com)
 
-- Lighthouse performance score
+- High Lighthouse performance scores
 - Image blur up on load
 - Prefetches linked content on scroll
 - Progressive Web App (PWA)
 
 ---
 
+## Gatsby:
+- Combines multiple data sources
+- Unified data access model: GraphQL
+- Generate pages at build time
+- React eco-system goodness
+
+---
 import howgatsbyworks from './images/how-gatsby-works.png'
 
 <Image src={howgatsbyworks} size="contain" style={{height: '99vh', zIndex: 10}}/>
@@ -301,19 +368,19 @@ Gatsby + MDX => components in your Markdown
 
 ---
 
-## Plugins Can Do More
+## Plugin Power!
 
-<SplitLeftAlign>
+<SplitLeftAlign style="width:90%">
 
 <div>
 
 - During generation:
+  - Markdown/MDX to HTML
   - RSS Feeds
   - Image Processing
-  - SASS
+  - Sass
   - Sitemap
   - Robots.txt
-  - Manifest
 
 </div>
 
@@ -322,12 +389,15 @@ Gatsby + MDX => components in your Markdown
 - Client-side:
   - Analytics
   - Search
+  - Comments
   - Offline mode
   - Crash monitoring
+  - [1400+ Plugins](https://www.gatsbyjs.org/plugins/)
 
 </div>
 
 </SplitLeftAlign>
+
 
 ---
 
@@ -351,6 +421,15 @@ Gatsby + MDX => components in your Markdown
 
 - Gatsby Cloud
 - Large site performance
+
+---
+
+## Use Gatsby For:
+
+- Portfolio, brouchure, blogs
+- Excels at content obtained at build time
+- Hybrid sites: include client side JS to communicate with APIs
+- New data? Regenerate and re-deploy
 
 ---
 
