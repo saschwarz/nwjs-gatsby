@@ -74,7 +74,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
 ## Why Change?
 
 1. Authoring experience so painful I don't want to blog!
-2. Extinct 1990s platform requiring a VPS: *simplify*
+2. 1990s platform requiring a VPS
 3. Performance
 
 ---
@@ -99,7 +99,7 @@ import legacyagilitynerd from './images/legacy-agilitynerd.png'
     - Flat files or CMS in [MDX](https://mdxjs.com/)
     - Local and mobile preview
     - Upload raw images
-    - Commit to `git` deploys site
+    - `git push` deploys site
 
 </div>
 </SplitLeftAlign>
@@ -194,7 +194,7 @@ https://jamstack.org
     - Hot reload/preview
     - Uploaded images optimized
     - Dynamic data updated during build
-    - Commit to `git` deploys site
+    - `git push` deploys site
 
 </div>
 <div>
@@ -280,16 +280,21 @@ took of <MultiLink match="Snap!">Snap!</MultiLink> this past year.
 
 ---
 
-## Build It!
+### Develop It!
 
-Start
 ```
 gatsby develop
+```
 
+### Build It!
 
+```
+gatsby build
 ```
 
 [What Happens When Gatsby Builds?](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/#what-happens-when-you-run-gatsby-build)
+
+
 
 ---
 
@@ -341,6 +346,15 @@ module.exports = {
       resolve: `gatsby-plugin-mdx`,
       options: {
         extensions: [`.mdx`, `.md`],
+        gatsbyRemarkPlugins: [
+          {
+            resolve: `gatsby-remark-images`,
+            options: {
+              maxWidth: 2000,
+              showCaptions: ['title', 'alt'],
+            },
+          },
+        ]
       }
     },
 
@@ -351,7 +365,7 @@ module.exports = {
 
 ---
 
-## Use GraphQL to Get Content
+## Use GraphQL to Access Data
 
 [GraphiQL](http://localhost:8000/___graphql?query=query%20MyQuery%20%7B%0A%20%20allMdx(sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20DESC%7D%2C%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20tagsGroup%3A%20allMdx(filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___tags)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=MyQuery)
 
@@ -372,7 +386,7 @@ module.exports = {
 
 exports.createPages = async ({ graphql, actions }) => {
 
-  // Get minimum data to pass to template
+  // Get MINIMUM data to pass to template
 
   const result = await graphql(
     `{
@@ -488,10 +502,8 @@ class BlogPostTemplate extends React.Component {
     // props extended with GraphQL results
 
     const { location, path, pageContext, data: { mdx, site: { siteMetadata } } } = this.props
-    const fullUrl = siteMetadata.siteUrl + location.pathname
-    const { previous, next, related } = pageContext
-    const description = mdx.frontmatter.description || mdx.excerpt
-    const image = mdx.frontmatter.image ? mdx.frontmatter.image.childImageSharp.fluid : null
+
+    // snip ...
 
     return (
       <Layout location={location} image={image}>
@@ -521,34 +533,7 @@ class BlogPostTemplate extends React.Component {
           <Disqus config={disqusConfig(fullUrl, mdx.frontmatter.title)} />
         </article>
         <hr className="mb-5" />
-        <ul className="article-nav d-print-none"
-          style={{
-            display: `flex`,
-            flexWrap: `wrap`,
-            justifyContent: `space-between`,
-            listStyle: `none`,
-            padding: 0,
-          }}
-        >
-          <li>
-            {previous && (
-              <small>
-                <Link to={previous.fields.slug} rel="prev">
-                  ← {previous.frontmatter.title}
-                </Link>
-              </small>
-            )}
-          </li>
-          <li>
-            {next && (
-              <small>
-                <Link to={next.fields.slug} rel="next">
-                  {next.frontmatter.title} →
-                  </Link>
-              </small>
-            )}
-          </li>
-        </ul>
+        <snip />
       </Layout>
     )
   }
@@ -646,8 +631,8 @@ Create your own:
 ## Wait, There's More Gatsby!
 
 
-- _This_ slide deck built with Gatsby-based [mdx-deck](https://github.com/jxnblk/mdx-deck) !
-- Source on GitHub:   https://github.com/saschwarz/nwjs-gatsby
+- _This slide deck_ is built with Gatsby-based [mdx-deck](https://github.com/jxnblk/mdx-deck) !
+- Slide deck source on GitHub:   https://github.com/saschwarz/nwjs-gatsby
 - Commit/Push Builds/Deploys to [Netlify](https://netlify.com):
 
 https://nwcjs-gatsby.netlify.com
