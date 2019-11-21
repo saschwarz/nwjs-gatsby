@@ -190,8 +190,8 @@ https://jamstack.org
 
   - Authoring
     - Flat files or CMS in Markdown
-    - Markdown + React => MDX
-    - Local preview/hot reload
+    - Local/mobile editing
+    - Hot reload/preview
     - Uploaded images optimized
     - Dynamic data updated during build
     - Commit to `git` deploys site
@@ -201,10 +201,10 @@ https://jamstack.org
 
   - Platform
     - Latest tech: JS, ReactJS, GraphQL
-    - Static hosting - anywhere and free
+    - Static hosting - anywhere/free
   - Performance!
     - All pages fast
-    - Prefetch pages/images
+    - Prefetches pages/images
     - Offline support
 
 </div>
@@ -247,16 +247,49 @@ gatsby new my-blog-starter https://github.com/gatsbyjs/gatsby-starter-blog
 
 cd my-blog-starter
 
-gatsby develop
 ```
 
 https://github.com/gatsbyjs/gatsby-starter-blog
 
 ---
 
-## What Happens When Gatsby Builds?
+## Create a Blog Post
 
-[Great explanation on the Gatsby site](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/#what-happens-when-you-run-gatsby-build)
+```md
+---
+author: Steve Schwarz
+date: 2019-11-07 14:00:00
+description: "Here are a couple amazing photos of Snap!"
+tags:
+- ChopsPhotography
+- journal
+- Snap!
+title: Photogenic Snap!
+image: "/uploads/snap-field-chops-photography-2019.jpg"
+---
+
+Here are just a couple of the amazing photographs
+Whitney Rupp of <MultiLink match="ChopsPhotography">Chops Photography</MultiLink>
+took of <MultiLink match="Snap!">Snap!</MultiLink> this past year.
+
+
+
+
+
+```
+
+---
+
+## Build It!
+
+Start
+```
+gatsby develop
+
+
+```
+
+[What Happens When Gatsby Builds?](https://www.gatsbyjs.org/docs/overview-of-the-gatsby-build-process/#what-happens-when-you-run-gatsby-build)
 
 ---
 
@@ -269,12 +302,58 @@ https://github.com/gatsbyjs/gatsby-starter-blog
 
 https://www.gatsbyjs.org/plugins/?=source
 
+
 ---
 
-## Using Data Sources
+<FullScreenCode style="z-index:10">
 
-- Configured in `gatsby-config.js`
-- Gatsby uses data sources to create GraphQL nodes
+```js
+
+// gatsby-config.js
+
+module.exports = {
+  siteMetadata: {
+    title: `AgilityNerd`,
+    author: `Steve Schwarz`,
+    subtitle: `Putting the nerd in dog agility since 2004`,
+    email: `steve@agilitynerd.com`,
+    siteUrl: `https://agilitynerd.com/`,
+
+  },
+  plugins: [
+    // data source plugins
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/uploads`,
+        name: `uploads`,
+      },
+    },
+    {
+      resolve: `gatsby-source-filesystem`,
+      options: {
+        path: `${__dirname}/content/blog/src`,
+        name: `blog`,
+      },
+    },
+    // transformation plugins
+    {
+      resolve: `gatsby-plugin-mdx`,
+      options: {
+        extensions: [`.mdx`, `.md`],
+      }
+    },
+
+
+
+```
+</FullScreenCode>
+
+---
+
+## Use GraphQL to Get Content
+
+[GraphiQL](http://localhost:8000/___graphql?query=query%20MyQuery%20%7B%0A%20%20allMdx(sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20DESC%7D%2C%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20tagsGroup%3A%20allMdx(filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___tags)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=MyQuery)
 
 ---
 
@@ -289,7 +368,12 @@ https://www.gatsbyjs.org/plugins/?=source
 <FullScreenCode>
 
 ```js
+// gatsby-node.js
+
 exports.createPages = async ({ graphql, actions }) => {
+
+  // Get minimum data to pass to template
+
   const result = await graphql(
     `{
       allMdx(sort: {fields: [frontmatter___date], order: DESC},
@@ -316,30 +400,32 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }`
   )
+
+
+
 ```
 </FullScreenCode>
 
 ---
 
-## Test/Fine Tune GQL Queries
-
-[GraphiQL](http://localhost:8000/___graphql?query=query%20MyQuery%20%7B%0A%20%20allMdx(sort%3A%20%7Bfields%3A%20%5Bfrontmatter___date%5D%2C%20order%3A%20DESC%7D%2C%20filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20edges%20%7B%0A%20%20%20%20%20%20node%20%7B%0A%20%20%20%20%20%20%20%20id%0A%20%20%20%20%20%20%20%20fields%20%7B%0A%20%20%20%20%20%20%20%20%20%20slug%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20frontmatter%20%7B%0A%20%20%20%20%20%20%20%20%20%20title%0A%20%20%20%20%20%20%20%20%20%20date%0A%20%20%20%20%20%20%20%20%20%20tags%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%0A%20%20%7D%0A%20%20tagsGroup%3A%20allMdx(filter%3A%20%7Bfrontmatter%3A%20%7Bdate%3A%20%7Bne%3A%20null%7D%2C%20draft%3A%20%7Bne%3A%20true%7D%7D%7D)%20%7B%0A%20%20%20%20group(field%3A%20frontmatter___tags)%20%7B%0A%20%20%20%20%20%20fieldValue%0A%20%20%20%20%7D%0A%20%20%7D%0A%7D%0A&operationName=MyQuery)
-
----
-
 <FullScreenCode>
 
-```
-// Create individual blog posts pages.
+```js
+// Create individual blog posts pages from query results
+
+const posts = result.data.allMdx.edges
 
 posts.forEach((post, index) => {
   const previous = index === posts.length - 1 ? null : posts[index + 1].node
   const next = index === 0 ? null : posts[index - 1].node
   const slug = post.node.fields.slug
+
+  // Call Gatsby API for each page:
+
   createPage({
-    path: slug,
-    component: slug.includes('/static/') ? staticPost : blogPost, // template component
-    context: {  // component props
+    path: slug,          // URL
+    component: blogPost, // template component
+    context: {           // template component props
       slug: slug,
       previous,
       next,
@@ -352,16 +438,132 @@ posts.forEach((post, index) => {
 
 ---
 
-## Templates
+## Template Components
 
 - React components
-- Can contain additional GraphQL queries
-
-`src/templates/static-post.js`
+- Optionally, GraphQL query for more data
 
 ---
 
-## Create/Use React Components Everywhere
+<FullScreenCode>
+
+```js
+// Static GraphQL query run with slug property
+
+export const pageQuery = graphql`
+  query BlogPostBySlug($slug: String) {
+    site {
+      siteMetadata {
+        title
+        siteUrl
+      }
+    }
+    mdx(fields: {slug: { eq: $slug }}) {
+      id
+      excerpt
+      body
+      frontmatter {
+        title
+        date(formatString: "DD MMM YYYY")
+        description
+        tags
+        author
+        image {
+          childImageSharp {
+            fluid(maxWidth:2000) {
+              ...GatsbyImageSharpFluid_withWebp
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+
+class BlogPostTemplate extends React.Component {
+
+  render() {
+
+    // props extended with GraphQL results
+
+    const { location, path, pageContext, data: { mdx, site: { siteMetadata } } } = this.props
+    const fullUrl = siteMetadata.siteUrl + location.pathname
+    const { previous, next, related } = pageContext
+    const description = mdx.frontmatter.description || mdx.excerpt
+    const image = mdx.frontmatter.image ? mdx.frontmatter.image.childImageSharp.fluid : null
+
+    return (
+      <Layout location={location} image={image}>
+        <SEO
+          title={mdx.frontmatter.title}
+          description={description}
+          image={image && image.src}
+        />
+        <Breadcrumb path={path} disableLast={true} />
+        <article>
+          <h1 className="mt-5">
+            {mdx.frontmatter.title}
+          </h1>
+          <p className="info">
+            <span className="date">{mdx.frontmatter.date}</span>
+            <span className="author">{mdx.frontmatter.author}</span>
+          </p>
+          <MDXRenderer>
+            {mdx.body}
+          </MDXRenderer>
+          <h3>Related Articles:</h3>
+          <ul>
+            { related.map(r => <li><Link to={r.slug}>{r.title}</Link></li>)}
+          </ul>
+          <div className="tags my-5">Tags: <TagsList tags={mdx.frontmatter.tags} /></div>
+          <AddThis slug={fullUrl} title={mdx.frontmatter.title} description={description} />
+          <Disqus config={disqusConfig(fullUrl, mdx.frontmatter.title)} />
+        </article>
+        <hr className="mb-5" />
+        <ul className="article-nav d-print-none"
+          style={{
+            display: `flex`,
+            flexWrap: `wrap`,
+            justifyContent: `space-between`,
+            listStyle: `none`,
+            padding: 0,
+          }}
+        >
+          <li>
+            {previous && (
+              <small>
+                <Link to={previous.fields.slug} rel="prev">
+                  ← {previous.frontmatter.title}
+                </Link>
+              </small>
+            )}
+          </li>
+          <li>
+            {next && (
+              <small>
+                <Link to={next.fields.slug} rel="next">
+                  {next.frontmatter.title} →
+                  </Link>
+              </small>
+            )}
+          </li>
+        </ul>
+      </Layout>
+    )
+  }
+}
+
+export default BlogPostTemplate
+
+
+
+```
+
+</FullScreenCode>
+
+---
+## React Components Everywhere
 
 Create your own:
   ```
@@ -371,9 +573,7 @@ Create your own:
   <Categories>
   ```
 
-Use 3rd Party Components
-
-Gatsby + MDX => components in your Markdown
+ 3rd Party Components
 
 ---
 
